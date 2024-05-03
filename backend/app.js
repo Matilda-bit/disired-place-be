@@ -12,8 +12,8 @@ app.use(bodyParser.json());
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*'); // allow all domains
-  res.setHeader('Access-Control-Allow-Methods', 'GET, PUT');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
   next();
 });
@@ -27,6 +27,7 @@ app.get('/places', async (req, res) => {
 });
 
 app.get('/user-places', async (req, res) => {
+
   const fileContent = await fs.readFile('./data/user-places.json');
 
   const places = JSON.parse(fileContent);
@@ -35,6 +36,7 @@ app.get('/user-places', async (req, res) => {
 });
 
 app.put('/user-places', async (req, res) => {
+  console.log('Im here');
   const places = req.body.places;
 
   await fs.writeFile('./data/user-places.json', JSON.stringify(places));
